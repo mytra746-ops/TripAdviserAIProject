@@ -1,14 +1,16 @@
 #from tools.tavily_tools import tavily_search
-from tools.flight_tool import search_flights
+#from tools.flight_tool import search_flights
+from backend import run_travel_agent
 
 #res = tavily_search("Best hotels in India")
 #print(res)
 
 
-res = search_flights("Plan a 7 days Nepal trip from India")
-print(res)
+#res = search_flights("Plan a 7 days Nepal trip from India")
+#print(res)
 
-""" user_input = input("Enter travel request: ")
+
+user_input = input("Enter travel request: ")
 
 response = run_travel_agent(
     user_input=user_input,
@@ -16,4 +18,4 @@ response = run_travel_agent(
 )
 print("\nFINAL RESPONSE:\n")
 print(response["answer"])
- """
+
