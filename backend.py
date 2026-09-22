@@ -3,6 +3,7 @@ import certifi
 from dotenv import load_dotenv
 
 load_dotenv()
+
 os.environ["SSL_CERT_FILE"] = certifi.where()
 os.environ["REQUESTS_CA_BUNDLE"] = certifi.where()
 
@@ -22,7 +23,6 @@ from langchain_core.messages import (
     SystemMessage,
 )
 from langchain_groq import ChatGroq
-
 from tools.tavily_tools import tavily_search
 from tools.flight_tool import search_flights
 
@@ -48,14 +48,14 @@ if not GROQ_API_KEY:
 
 
 # =========================
-# LLM (CRITICAL FIX: Switched to a generation model with large context)
+# LLM
 # =========================
 
 llm = ChatGroq(
-    model="llama-3.3-70b-specdec",
-    api_key=GROQ_API_KEY,
-    temperature=0.3
+    model="qwen/qwen3.8-27b",
+    api_key=GROQ_API_KEY
 )
+
 
 # =========================
 # State
@@ -87,6 +87,7 @@ def flight_agent(state: TravelState):
     }
 
 
+
 # =========================
 # Hotel Agent
 # =========================
@@ -102,6 +103,8 @@ def hotel_agent(state: TravelState):
         ],
         "llm_calls": state.get("llm_calls", 0) + 1
     }
+
+
 
 
 # =========================
@@ -134,6 +137,8 @@ Make the itinerary practical, budget-aware, and easy to follow.
         "messages": [response],
         "llm_calls": state.get("llm_calls", 0) + 1
     }
+
+
 
 # =========================
 # Final Response Agent
@@ -204,11 +209,17 @@ graph.add_edge("final_agent", END)
 # =========================
 DATABASE_URL = get_database_url()
 
-# Wrapped connection logic with context block when compiling to prevent persistent thread blocks
-with psycopg.connect(DATABASE_URL, autocommit=True, row_factory=dict_row) as _conn:
-    checkpointer = PostgresSaver(_conn)
-    checkpointer.setup()
-    travel_graph = graph.compile(checkpointer=checkpointer)
+_conn = psycopg.connect(
+    DATABASE_URL,
+    autocommit=True,
+    row_factory=dict_row
+)
+
+checkpointer = PostgresSaver(_conn)
+checkpointer.setup()
+
+travel_graph = graph.compile(checkpointer=checkpointer)
+
 
 
 # =========================
