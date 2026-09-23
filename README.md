@@ -5,7 +5,7 @@ AI MCP Project
 #pip install -r requirements.txt
 #pgadmin install
 #create account in render to create db in production cloud
-#postgresql://admin:W1TAuzlzaPEHNvWo4MuXVVIWYWoWyGZX@dpg-dalp2bu5vjqs7386f7pg-a.oregon-postgres.render.com/agentmemory_9vj4
+#postgresql://admin:/{Url}
 #dpg-dalp2bu5vjqs7386f7pg-a.oregon-postgres.render.com
 
 
