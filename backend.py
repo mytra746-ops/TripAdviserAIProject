@@ -23,9 +23,10 @@ from langchain_core.messages import (
     SystemMessage,
 )
 from langchain_groq import ChatGroq
-from tools.tavily_tools import tavily_search
+#from tools.tavily_tools import tavily_search
 from tools.flight_tool import search_flights
-
+from mcp_clinet_test import travily_mcp_search
+import asyncio
 
 def get_database_url():
     database_url = os.getenv("DATABASE_URL")
@@ -94,7 +95,9 @@ def flight_agent(state: TravelState):
 
 def hotel_agent(state: TravelState):
     query = f"Best hotels for {state['user_query']}"
-    hotel_results = tavily_search(query)
+    #hotel_results = tavily_search(query)
+    hotel_results = asyncio.run(travily_mcp_search(query))
+
 
     return {
         "hotel_results": hotel_results,

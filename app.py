@@ -10,6 +10,9 @@ from pydantic import BaseModel
 
 from backend import run_travel_agent
 
+import nest_asyncio
+nest_asyncio.apply()
+
 BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI(
@@ -111,5 +114,6 @@ if __name__ == "__main__":
         "app:app",
         host="127.0.0.1",
         port=8000,
-        reload=True
+        reload=True,
+        loop="asyncio"
     )
