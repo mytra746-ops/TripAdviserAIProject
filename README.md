@@ -15,3 +15,10 @@ AI MCP Project
 #AVIATIONSTACK_API_KEY=your_aviationstack_api_key
 #TAVILY_API_KEY=your_tavily_api_key
 #DEFAULT_ORIGIN_IATA=DAC
+
+
+#ADD MCP CHANGES 
+
+#Add MCP Client 
+git config --global user.name "mytra746-ops"
+git config --global user.email "mytra746@gmail.com"
